@@ -89,10 +89,6 @@ jobs:
 4. Set up GitHub Pages -> Settings -> Pages -> Choose Deploy from branch :
    gh-pages /(root)
 
-5. App wil be live at
-
-"https://your_repo.io/pokeApi/"
-
 ## Upcoming feature using TDD
 
 - Filtering Pokemon by name or ability
