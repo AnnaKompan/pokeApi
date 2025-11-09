@@ -17,6 +17,13 @@ stats like name, height, weight, and skills.
 **Parcel** - builds all files and dependencies automatically, bundling together
 HTML, CSS, JS, images and other assets for development or production.
 
+## Prerequisites (modify later)
+
+- Install Puppeteer and add to devDependencies in package.json
+  `npm install puppeteer --save-dev`
+
+- Install Dependencies listed in package.json `npm install`
+
 ## Installation and Setup
 
 1. Clone the repository
@@ -29,7 +36,7 @@ HTML, CSS, JS, images and other assets for development or production.
 
 3. Run the development server (Parcel will start local development server)
 
-`npm start`
+`npm run start`
 
 4. Build for production
 
@@ -86,7 +93,7 @@ jobs:
 
 "https://your_repo.io/pokeApi/"
 
-## Upcoming feature using TDD...
+## Upcoming feature using TDD
 
 - Filtering Pokemon by name or ability
 - Sorting Pokemon (weight, height, aphabetic order)
