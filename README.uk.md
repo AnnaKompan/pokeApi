@@ -54,7 +54,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         uses: actions/checkout@v2.3.1
 
       - name: Install and Build 🔧
@@ -62,12 +62,34 @@ jobs:
           npm ci
           npm run build
 
-      - name: Deploy 🚀
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
           folder: dist
 ```
 
-3. Set up GitHub Pages -> Settings -> Pages -> Choose Deploy from branch :
+3. Modify "homepage" and "build" in package.json your_username and
+   your_repo_name
+
+```
+"homepage": "https://your_username.github.io/your_repo_name/",
+"scripts": {
+  "build": "parcel build src/*.html --public-url /your_repo_name/"
+},
+```
+
+4. Set up GitHub Pages -> Settings -> Pages -> Choose Deploy from branch :
    gh-pages /(root)
+
+5. App wil be live at
+
+"https://your_repo.io/pokeApi/"
+
+## Upcoming feature using TDD...
+
+- Filtering Pokemon by name or ability
+- Sorting Pokemon (weight, height, aphabetic order)
+- Favorite Pokemons Page (add Pokemon to favorites and store in localStorage of
+  the browser)
+- OpenAI API Pokemon Search (use AI to suggest Pokemon for specific task)
