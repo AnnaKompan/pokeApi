@@ -34,3 +34,40 @@ HTML, CSS, JS, images and other assets for development or production.
 4. Build for production
 
 `npm run build`
+
+## Deployment
+
+1. Enable GitHub Actions permissions -> Settings -> Actions -> General: Set up
+   Workflow permissions to "Read and Write" && "Allow GitHub Actions to create
+   and approve pull requests"
+
+2. Create a workflow in root directory .github/workflows/deplot.yml with
+
+```
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Install and Build 🔧
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: dist
+```
+
+3. Set up GitHub Pages -> Settings -> Pages -> Choose Deploy from branch :
+   gh-pages /(root)
