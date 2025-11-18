@@ -5,7 +5,10 @@
   "homepage": "https://github.com/AnnaKompan/pokeApi",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /pokeApi/"
+    "build": "parcel build src/*.html --public-url /pokeApi/",
+    "test": "node --test test/unit/**/*.test.js",
+    "test:e2e": "node --test test/e2e/**/*.test.js",
+    "test:all": "node --test test/**/*.test.js"
   },
   "repository": {
     "type": "git",
