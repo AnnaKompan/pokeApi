@@ -19,10 +19,19 @@ HTML, CSS, JS, images and other assets for development or production.
 
 ## Prerequisites (modify later)
 
-- Install Puppeteer and add to devDependencies in package.json
-  `npm install puppeteer --save-dev`
+1. Node.js (v16+ recommended)
 
-- Install Dependencies listed in package.json `npm install`
+Download: https://nodejs.org/
+
+2. npm (comes with Node.js)
+
+3. Install project dependencies:
+
+`npm install`
+
+4. Puppeteer for automated testing (Optional) :
+
+`npm install puppeteer --save-dev`
 
 ## Installation and Setup
 
@@ -41,6 +50,24 @@ HTML, CSS, JS, images and other assets for development or production.
 4. Build for production
 
 `npm run build`
+
+## Contributing
+
+If you’d like to contribute:
+
+1. Fork the repository
+
+2. Create a feature branch:
+
+`git checkout -b feature/your-feature`
+
+3. Commit your changes
+
+4. Push your branch:
+
+`git push origin feature/your-feature`
+
+5. Open a Pull Request
 
 ## Deployment
 
