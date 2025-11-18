@@ -118,7 +118,18 @@ jobs:
 
 ## Upcoming feature using TDD
 
-- Filtering Pokemon by name or ability
+### Anna
+
+1. **Test Describe 1 (RED)**:
+
+Test sorting functionality of Pokemons by weight and height would work
+correctly. Test cases should check sort: in ascending order in descending order
+handle single element handle duplicate element
+
+2. **Test Describe 2 (RED)**:
+
+Test sorting
+
 - Sorting Pokemon (weight, height, aphabetic order)
 - Favorite Pokemons Page (add Pokemon to favorites and store in localStorage of
   the browser)
