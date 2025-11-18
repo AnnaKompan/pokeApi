@@ -118,19 +118,35 @@ jobs:
 
 ## Upcoming feature using TDD
 
-### Anna
-
-1. **Test Describe 1 (RED)**:
-
-Test sorting functionality of Pokemons by weight and height would work
-correctly. Test cases should check sort: in ascending order in descending order
-handle single element handle duplicate element
-
-2. **Test Describe 2 (RED)**:
-
-Test sorting
-
 - Sorting Pokemon (weight, height, aphabetic order)
 - Favorite Pokemons Page (add Pokemon to favorites and store in localStorage of
   the browser)
 - OpenAI API Pokemon Search (use AI to suggest Pokemon for specific task)
+
+### Anna
+
+1. **Test Describe 1**:
+
+Test sorting functionality of Pokemons by weight and height would work
+correctly.
+
+Test cases should check sort:
+
+- in ascending order (by weight, height, A-Z, ID)
+- in descending order (by weight, height, A-Z, ID)
+- handle single element
+- handle duplicate element
+
+2. **Test Describe 2 (RED)**:
+
+Test filtering functionality of Pokemons:
+
+- by type (fire, water)
+- by name (case-insensitive)
+- by ID
+- return all Pokemons if no filter applied
+- return empty array if no matching filters
+
+3.  **Test Describe 3 (RED)**:
+
+Use Puppeteer to test pokemons filter by search input
