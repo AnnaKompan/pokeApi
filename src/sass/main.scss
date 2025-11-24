@@ -93,3 +93,15 @@ body {
   display: flex;
   padding-left: 0;
 }
+
+.more_btn {
+  display: block;
+  margin: 30px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4b4747;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
