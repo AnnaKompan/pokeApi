@@ -33,10 +33,10 @@ refs.filterSelect.addEventListener('change', filterAndSort);
 
 function loadAll() {
   fetchBatch().then(() => {
-    filterAndSort(); // render first batch
+    filterAndSort();
   });
 }
-// Fetch batch of Pokémon
+
 function fetchBatch() {
   return API.fetchAll(limit, offset)
     .then(data => {
@@ -47,26 +47,23 @@ function fetchBatch() {
     })
     .then(pokemonArr => {
       offset += limit;
-      allPokemons = [...allPokemons, ...pokemonArr]; // always append new batch
-      return pokemonArr; // return only new batch
+      allPokemons = [...allPokemons, ...pokemonArr];
+      return pokemonArr;
     })
     .catch(err => console.error(err));
 }
 
-// Render Pokémon list
 function renderPokemonList(pokemonArray, append = false) {
   if (!append) refs.cardContainer.innerHTML = '';
   const markup = pokemonArray.map(p => pokemonCardTpl(p)).join('');
   refs.cardContainer.insertAdjacentHTML('beforeend', markup);
 }
 
-// Search submit
 function onSearch(e) {
   e.preventDefault();
   filterAndSort();
 }
 
-// Filter + sort + type
 function filterAndSort() {
   const query = refs.searchInput.value.trim().toLowerCase();
   let result = allPokemons;
@@ -86,7 +83,6 @@ function filterAndSort() {
   renderPokemonList(result);
 }
 
-// Lazy load / load more
 function morePokemons() {
   if (offset >= totalCount) {
     alert('No more Pokémons to load!');
@@ -94,7 +90,6 @@ function morePokemons() {
   }
 
   fetchBatch().then(newBatch => {
-    // append new batch to the DOM regardless of filtering
     renderPokemonList(newBatch, true);
   });
 }
