@@ -1,41 +1,29 @@
-<!DOCTYPE html><html lang="ru"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PokeAPI</title>
-  <link rel="stylesheet" href="/pokeApi.f7626f62.css">
-  <link rel="icon" href="/pokeball-pokemon-svgrepo-com.97124907.svg" type="image/x-icon">
-  <script type="module" src="/pokeApi.20686bc6.js"></script>
-</head>
-
-<body>
-  <!-- ❗️❗️❗️ Add partials for every page -->
-  <section class="poke-container">
-    <h1 class="poke_title">
+<!DOCTYPE html><html lang=ru><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>PokeAPI</title><link rel=stylesheet href=/pokeApi/pokeApi.e67caa77.css><link rel=icon href=/pokeApi/pokeball-pokemon-svgrepo-com.533674eb.svg type=image/x-icon><script type=module src=/pokeApi/pokeApi.bd3c9e93.js></script><body>
+  
+  <section class=poke-container>
+    <h1 class=poke_title>
         Pokemon Labaratory
     </h1>
-    <div class="poke-form_box">
-        <form class="poke_form">
-            <label for="pokname"></label>
-            <input class="poke-input" type="text" id="pokname" name="query" placeholder="Search Pokemon by Name or ID">
+    <div class=poke-form_box>
+        <form class=poke_form>
+            <label for=pokname></label>
+            <input class=poke-input id=pokname name=query placeholder="Search Pokemon by Name or ID">
         </form>
-        <p class="poke-form_text">Type an arbitrary number or Pokemon name</p>
+        <p class=poke-form_text>Type an arbitrary number or Pokemon name</p>
     </div>
-    <div class="poke-filt_sort">
-        <select name="" id="" class="poke_sort">
-            <option value="">Sort</option>
-            <option value="asc">Sort by Name: A-Z</option>
-            <option value="desc">Sort by Name: Z-A</option>
-            <option value="id-asc">Sort by Number: Ascending</option>
-            <option value="id-desc">Sort by Number: Descending</option>
+    <div class=poke-filt_sort>
+        <select name id class=poke_sort>
+            <option value>Sort</option>
+            <option value=asc>Sort by Name: A-Z</option>
+            <option value=desc>Sort by Name: Z-A</option>
+            <option value=id-asc>Sort by Number: Ascending</option>
+            <option value=id-desc>Sort by Number: Descending</option>
         </select>
-        <!-- <select name="" id="" class="poke_filter">
-            <option value="all">Fly?</option>
-        </select> -->
+        
     </div>
-    <div class="card-container"></div>
-    <button class="more_btn">Load More</button>
+    <div class=card-container></div>
+    <button class=more_btn>Load More</button>
 </section>
   
 
 
-</body></html>
