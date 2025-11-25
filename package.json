@@ -7,7 +7,8 @@
     "start": "parcel src/*.html",
     "dev": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /pokeApi/",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "@parcel/config-default": "^2.16.0",
     "@parcel/transformer-sass": "^2.16.0",
     "gh-pages": "^6.3.0",
+    "jest": "^30.2.0",
     "parcel": "^2.16.0",
     "parcel-reporter-clean-dist": "^1.0.4",
     "posthtml-include": "^1.7.4"

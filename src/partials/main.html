@@ -5,11 +5,22 @@
     <div class="poke-form_box">
         <form class="poke_form">
             <label for="pokname"></label>
-            <input class="poke-input" type="text" id="pokname" name="query" placeholder="Search Pokemon">
+            <input class="poke-input" type="text" id="pokname" name="query" placeholder="Search Pokemon by Name or ID">
         </form>
-        <p class="poke-form_text">Type an arbitrary number...</p>
+        <p class="poke-form_text">Type an arbitrary number or Pokemon name</p>
     </div>
-
+    <div class="poke-filt_sort">
+        <select name="" id="" class="poke_sort">
+            <option value="">Sort</option>
+            <option value="asc">Sort by Name: A-Z</option>
+            <option value="desc">Sort by Name: Z-A</option>
+            <option value="id-asc">Sort by Number: Ascending</option>
+            <option value="id-desc">Sort by Number: Descending</option>
+        </select>
+        <select name="" id="" class="poke_filter">
+            <option value="all">Fly?</option>
+        </select>
+    </div>
     <div class="card-container"></div>
     <button class="more_btn">Load More</button>
 </section>

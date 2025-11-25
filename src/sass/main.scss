@@ -48,7 +48,7 @@ body {
 }
 
 .poke-input {
-  width: 150px;
+  width: 600px;
   height: 30px;
   border-radius: 10px;
   border: none;
@@ -104,4 +104,21 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.more_btn:hover {
+  background-color: #715353;
+}
+.poke-filt_sort {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 20px;
+}
+.poke_sort {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #4b4747;
+  background-color: #fff;
+  color: #4b4747;
 }

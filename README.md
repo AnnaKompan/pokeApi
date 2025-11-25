@@ -125,7 +125,7 @@ jobs:
 
 ### Anna
 
-1. **Test Describe 1**:
+1. **Test Describe 1 (RED)**:
 
 Test sorting functionality of Pokemons by weight and height would work
 correctly.
