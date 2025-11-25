@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', loadAll);
 refs.searchInput.addEventListener('input', filterAndSort);
 refs.searchForm.addEventListener('submit', onSearch);
 refs.sortSelect.addEventListener('change', filterAndSort);
-refs.filterSelect.addEventListener('change', filterAndSort);
+// refs.filterSelect.addEventListener('change', filterAndSort);
 
 function loadAll() {
   fetchBatch().then(() => {
@@ -70,9 +70,9 @@ function filterAndSort() {
 
   if (query) result = filterByName(result, query);
 
-  const selectedType = refs.filterSelect.value;
-  if (selectedType && selectedType !== 'all')
-    result = filterByType(result, selectedType);
+  // const selectedType = refs.filterSelect.value;
+  // if (selectedType && selectedType !== 'all')
+  //   result = filterByType(result, selectedType);
 
   const mode = refs.sortSelect.value;
   if (mode === 'asc') result = sortByNameAZ(result);
