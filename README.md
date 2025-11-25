@@ -19,10 +19,19 @@ HTML, CSS, JS, images and other assets for development or production.
 
 ## Prerequisites (modify later)
 
-- Install Puppeteer and add to devDependencies in package.json
-  `npm install puppeteer --save-dev`
+1. Node.js (v16+ recommended)
 
-- Install Dependencies listed in package.json `npm install`
+Download: https://nodejs.org/
+
+2. npm (comes with Node.js)
+
+3. Install project dependencies:
+
+`npm install`
+
+4. Puppeteer for automated testing (Optional) :
+
+`npm install puppeteer --save-dev`
 
 ## Installation and Setup
 
@@ -41,6 +50,24 @@ HTML, CSS, JS, images and other assets for development or production.
 4. Build for production
 
 `npm run build`
+
+## Contributing
+
+If you’d like to contribute:
+
+1. Fork the repository
+
+2. Create a feature branch:
+
+`git checkout -b feature/your-feature`
+
+3. Commit your changes
+
+4. Push your branch:
+
+`git push origin feature/your-feature`
+
+5. Open a Pull Request
 
 ## Deployment
 
@@ -91,8 +118,35 @@ jobs:
 
 ## Upcoming feature using TDD
 
-- Filtering Pokemon by name or ability
 - Sorting Pokemon (weight, height, aphabetic order)
 - Favorite Pokemons Page (add Pokemon to favorites and store in localStorage of
   the browser)
 - OpenAI API Pokemon Search (use AI to suggest Pokemon for specific task)
+
+### Anna
+
+1. **Test Describe 1 (RED)**:
+
+Test sorting functionality of Pokemons by weight and height would work
+correctly.
+
+Test cases should check sort:
+
+- in ascending order (by weight, height, A-Z, ID)
+- in descending order (by weight, height, A-Z, ID)
+- handle single element
+- handle duplicate element
+
+2. **Test Describe 2 (RED)**:
+
+Test filtering functionality of Pokemons:
+
+- by type (fire, water)
+- by name (case-insensitive)
+- by ID
+- return all Pokemons if no filter applied
+- return empty array if no matching filters
+
+3.  **Test Describe 3 (RED)**:
+
+Use Puppeteer to test pokemons filter by search input
