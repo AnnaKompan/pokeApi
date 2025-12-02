@@ -122,3 +122,56 @@ body {
   background-color: #fff;
   color: #4b4747;
 }
+
+.poke_filter {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #4b4747;
+  background-color: #fff;
+  color: #4b4747;
+}
+
+.range-control {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+.range-label {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #4b4747;
+}
+
+.poke_weights_range,
+.poke_heights_range {
+  width: 150px;
+  height: 8px;
+  background-color: #ddd;
+  border-radius: 4px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.poke_weights_range::-webkit-slider-thumb,
+.poke_heights_range::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background-color: #4b4747;
+  border-radius: 50%;
+}
+
+.poke_range_label {
+  font-size: 14px;
+  color: #4b4747;
+}
+.pokemon-type {
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 12px;
+  padding: 4px 8px;
+  margin-right: 5px;
+  font-size: 12px;
+  color: #333;
+}

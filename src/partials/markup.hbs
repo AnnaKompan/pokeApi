@@ -6,7 +6,12 @@
     <h2 class='card-title'>Name: {{name}}</h2>
     <p class='card-text'>Weight: {{weight}}</p>
     <p class='card-text'>Height: {{height}}</p>
-
+    <p class='card-text'>
+      <b>Type:</b>
+      {{#each types}}
+        <span class='pokemon-type'>{{type.name}}</span>
+      {{/each}}
+    </p>
     <p class='card-text'><b>Abilities</b></p>
     {{#each abilities}}
       <ul class='list-group'>

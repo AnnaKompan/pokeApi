@@ -7,6 +7,8 @@ import {
   sortByIdAsc,
   sortByIdDesc,
   filterByType,
+  filterByWeight,
+  filterByHeight,
 } from './filter_sort/filter_sort';
 
 let allPokemons = [];
@@ -18,18 +20,44 @@ const refs = {
   cardContainer: document.querySelector('.card-container'),
   searchForm: document.querySelector('.poke_form'),
   sortSelect: document.querySelector('.poke_sort'),
-  filterSelect: document.querySelector('.poke_filter'),
+  typeFilter: document.querySelector('.poke_filter'),
   searchInput: document.querySelector('.poke-input'),
   moreBtn: document.querySelector('.more_btn'),
+
+  weightRange: document.getElementById('poke-weight-range'),
+  heightRange: document.getElementById('poke-height-range'),
+
+  weightVal: document.getElementById('weight-value'),
+  heightVal: document.getElementById('height-value'),
 };
 
 // Event listeners
-refs.moreBtn.addEventListener('click', morePokemons);
-document.addEventListener('DOMContentLoaded', loadAll);
-refs.searchInput.addEventListener('input', filterAndSort);
-refs.searchForm.addEventListener('submit', onSearch);
-refs.sortSelect.addEventListener('change', filterAndSort);
-// refs.filterSelect.addEventListener('change', filterAndSort);
+// refs.moreBtn.addEventListener('click', morePokemons);
+// document.addEventListener('DOMContentLoaded', loadAll);
+// refs.searchInput.addEventListener('input', filterAndSort);
+// refs.searchForm.addEventListener('submit', onSearch);
+// refs.sortSelect.addEventListener('change', filterAndSort);
+// refs.typeFilter.addEventListener('change', filterAndSort);
+
+document.addEventListener('DOMContentLoaded', () => {
+  refs.moreBtn.addEventListener('click', morePokemons);
+  refs.searchInput.addEventListener('input', filterAndSort);
+  refs.searchForm.addEventListener('submit', onSearch);
+  refs.sortSelect.addEventListener('change', filterAndSort);
+  refs.typeFilter.addEventListener('change', filterAndSort);
+
+  refs.weightRange.addEventListener('input', () => {
+    refs.weightVal.textContent = refs.weightRange.value;
+    filterAndSort();
+  });
+
+  refs.heightRange.addEventListener('input', () => {
+    refs.heightVal.textContent = refs.heightRange.value;
+    filterAndSort();
+  });
+
+  loadAll();
+});
 
 function loadAll() {
   fetchBatch().then(() => {
@@ -70,9 +98,15 @@ function filterAndSort() {
 
   if (query) result = filterByName(result, query);
 
-  // const selectedType = refs.filterSelect.value;
-  // if (selectedType && selectedType !== 'all')
-  //   result = filterByType(result, selectedType);
+  const selectedType = refs.typeFilter.value;
+  if (selectedType && selectedType !== 'all')
+    result = filterByType(result, selectedType);
+
+  const maxWeight = Number(refs.weightRange.value);
+  result = filterByWeight(result, 1, maxWeight);
+
+  const maxHeight = Number(refs.heightRange.value);
+  result = filterByHeight(result, 1, maxHeight);
 
   const mode = refs.sortSelect.value;
   if (mode === 'asc') result = sortByNameAZ(result);

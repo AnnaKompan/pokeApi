@@ -4,6 +4,9 @@ const {
   sortByNameZA,
   sortByIdAsc,
   sortByIdDesc,
+  filterByType,
+  filterByHeight,
+  filterByWeight,
 } = require('./filter_sort');
 
 const pokemons = [
@@ -46,82 +49,93 @@ describe('Sorting pokemons', () => {
     ]);
   });
 
-  test('sort by ID in descending order', () => {
-    expect(sortByIdAsc(id)).toEqual([4, 8, 10, 12]);
-  });
   test('sort by ID in ascending order', () => {
-    expect(sortByIdDesc(id)).toEqual([12, 10, 8, 4]);
+    expect(sortByIdAsc(id)).toEqual([
+      { id: 4 },
+      { id: 8 },
+      { id: 10 },
+      { id: 12 },
+    ]);
+  });
+  test('sort by ID in descending order', () => {
+    expect(sortByIdDesc(id)).toEqual([
+      { id: 12 },
+      { id: 10 },
+      { id: 8 },
+      { id: 4 },
+    ]);
   });
 });
 
-// import pokemonCardTpl from '../partials/markup';
-// import API from '../js/api-service';
+describe('filter by type', () => {
+  const pokemons_types = [
+    {
+      name: 'bulbasaur',
+      types: [{ type: { name: 'grass' } }, { type: { name: 'poison' } }],
+    },
+    {
+      name: 'ivysaur',
+      types: [{ type: { name: 'grass' } }, { type: { name: 'poison' } }],
+    },
+    {
+      name: 'venusaur',
+      types: [{ type: { name: 'grass' } }, { type: { name: 'poison' } }],
+    },
+    {
+      name: 'charmander',
+      types: [{ type: { name: 'fire' } }],
+    },
+  ];
+  test('filter by one match', () => {
+    expect(filterByType(pokemons_types, 'fire')).toEqual([pokemons_types[3]]);
+  });
+  test('filter by multiple types of multiple pokemons', () => {
+    const q_arr = ['grass', 'poison'];
+    expect(filterByType(pokemons_types, q_arr)).toEqual([
+      pokemons_types[0],
+      pokemons_types[1],
+      pokemons_types[2],
+    ]);
+  });
+  test('return empty arrat if no match for type', () => {
+    expect(filterByType(pokemons_types, 'dragon')).toEqual([]);
+  });
+});
 
-// const refs = {
-//   cardContainer: document.querySelector('.card-container'),
-//   searchForm: document.querySelector('.poke_form'),
-// };
+describe('filter by weight using slider', () => {
+  const arr = [
+    { name: 'a', weight: 10 },
+    { name: 'b', weight: 100 },
+    { name: 'c', weight: 200 },
+  ];
+  test('filter within weight range', () => {
+    expect(filterByWeight(arr, 50, 150)).toEqual([arr[1]]);
+  });
 
-// const moreBtn = document.querySelector('.more_btn');
-// moreBtn.addEventListener('click', morePokemons);
+  test('return empty arr if no pokemons match weight', () => {
+    expect(filterByWeight(arr, 250, 300)).toEqual([]);
+  });
 
-// document.addEventListener('DOMContentLoaded', loadAll);
-// refs.searchForm.addEventListener('submit', onSearch);
+  test('return multiple matches for weight range', () => {
+    expect(filterByWeight(arr, 5, 150)).toEqual([arr[0], arr[1]]);
+  });
+});
 
-// function loadAll() {
-//   API.fetchAll(20)
-//     .then(data => {
-//       return Promise.all(
-//         data.results.map(p => fetch(p.url).then(res => res.json()))
-//       );
-//     })
-//     .then(renderPokemonList)
-//     .catch(console.error);
-// }
-// function loadAll() {
-//   fetchBatch();
-// }
-// let limit = 20;
-// let offset = 0;
-// let totalCount = 0;
-// function fetchBatch() {
-//   API.fetchAll(limit, offset)
-//     .then(data => {
-//       totalCount = data.count;
-//       offset += limit;
+describe('filter by height using slider', () => {
+  const arr = [
+    { name: 'a', height: 5 },
+    { name: 'b', height: 10 },
+    { name: 'c', height: 30 },
+  ];
+  test('filter within height range', () => {
+    expect(filterByHeight(arr, 8, 25)).toEqual([arr[1]]);
+  });
 
-//       return Promise.all(
-//         data.results.map(p => fetch(p.url).then(res => res.json()))
-//       );
-//     })
-//     .then(renderPokemonList)
-//     .catch(err => console.error(err));
-// }
+  test('return empty arr if no pokemons match height', () => {
+    expect(filterByHeight(arr, 40, 50)).toEqual([]);
+  });
 
-// function renderPokemonList(pokemonArray) {
-//   pokemonArray.forEach(pokemonCardTpl);
-// }
-
-// function onSearch(e) {
-//   e.preventDefault();
-
-//   const form = e.currentTarget;
-//   const searchQuery = form.elements.query.value.trim();
-
-//   API.fetchPokemon(searchQuery)
-//     .then(pokemonCardTpl)
-//     .catch(onFetchErr)
-//     .finally(() => form.reset());
-// }
-
-// function onFetchErr() {
-//   alert('алярм алярм!!!  USE NUMBERS!!!');
-// }
-
-// function morePokemons() {
-//   if (offset >= totalCount) {
-//     alert('No More Pokemons to load!');
-//     return;
-//   }
-//   fetchBatch();
-// }
+  test('return multiple matches for height range', () => {
+    expect(filterByHeight(arr, 5, 40)).toEqual([arr[0], arr[1], arr[2]]);
+  });
+});

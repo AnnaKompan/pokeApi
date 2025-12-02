@@ -18,6 +18,12 @@ export default function pokemonCardTpl(pokemon) {
     <ul class='list-group'>
       <li class='list-group-item'>${abilityName}</li>
     </ul>
+    <p class='card-text'>
+      <h2 class="poke-type-label">Type:</h2>
+      ${pokemon.types
+        .map(t => `<span class='pokemon-type'>${t.type.name}</span>`)
+        .join(' ')}
+    </p>
 </div>
 </div>`;
   refs.cardContainer.insertAdjacentHTML('beforeend', card);
