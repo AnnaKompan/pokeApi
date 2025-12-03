@@ -1,5 +1,6 @@
 import pokemonCardTpl from '../partials/markup';
 import API from '../js/api-service';
+import { initFavorites, hideFavoritesSection } from '../js/favorites.js';
 import {
   filterByName,
   sortByNameAZ,
@@ -15,29 +16,6 @@ let allPokemons = [];
 let limit = 20;
 let offset = 0;
 let totalCount = 0;
-
-const refs = {
-  cardContainer: document.querySelector('.card-container'),
-  searchForm: document.querySelector('.poke_form'),
-  sortSelect: document.querySelector('.poke_sort'),
-  typeFilter: document.querySelector('.poke_filter'),
-  searchInput: document.querySelector('.poke-input'),
-  moreBtn: document.querySelector('.more_btn'),
-
-  weightRange: document.getElementById('poke-weight-range'),
-  heightRange: document.getElementById('poke-height-range'),
-
-  weightVal: document.getElementById('weight-value'),
-  heightVal: document.getElementById('height-value'),
-};
-
-// Event listeners
-// refs.moreBtn.addEventListener('click', morePokemons);
-// document.addEventListener('DOMContentLoaded', loadAll);
-// refs.searchInput.addEventListener('input', filterAndSort);
-// refs.searchForm.addEventListener('submit', onSearch);
-// refs.sortSelect.addEventListener('change', filterAndSort);
-// refs.typeFilter.addEventListener('change', filterAndSort);
 
 document.addEventListener('DOMContentLoaded', () => {
   refs.moreBtn.addEventListener('click', morePokemons);
@@ -59,11 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAll();
 });
 
+// Initialize favorites functionality on page load
+document.addEventListener('DOMContentLoaded', () => {
+  initFavorites();
+});
+
+refs.searchForm.addEventListener('submit', onSearch);
+
 function loadAll() {
   fetchBatch().then(() => {
     filterAndSort();
   });
 }
+
 
 function fetchBatch() {
   return API.fetchAll(limit, offset)
@@ -90,6 +76,8 @@ function renderPokemonList(pokemonArray, append = false) {
 function onSearch(e) {
   e.preventDefault();
   filterAndSort();
+// Hide favorites section when searching
+  hideFavoritesSection();
 }
 
 function filterAndSort() {
