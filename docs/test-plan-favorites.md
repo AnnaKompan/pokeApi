@@ -1,8 +1,8 @@
 # Favorites Feature - E2E Test Plan
  
 **Test File:** `test/e2e/favorites.e2e.test.js`  
-**Status:** Week 1 - RED Phase (Tests Written, All Failing)  
-**Total Tests:** 18
+**Status:** Week 2 - GREEN Phase (All Tests Passing) ✅  
+**Total Tests:** 19
 
 ## Test Coverage
 
@@ -12,12 +12,14 @@
 - Show visual feedback (button state change) after adding
 - Prevent duplicate Pokemon in favorites
 
-### 2. View Favorites List (5 tests)
+### 2. View Favorites List (7 tests)
 - Favorites navigation button/link exists
 - Display favorites page/section when clicked
 - Show empty state message when no favorites exist
 - Display all favorite Pokemon in list
 - Show Pokemon details (name, image, stats) in favorites
+- Back to Search button exists in favorites section
+- Return to search page when Back button is clicked
 
 ### 3. Remove from Favorites (3 tests)
 - Remove button exists on each favorite card

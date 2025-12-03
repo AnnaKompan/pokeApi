@@ -1,7 +1,13 @@
 <section class="poke-container">
-    <h1 class="poke_title">
-        Pokemon Labaratory
-    </h1>
+    <nav class="poke-nav">
+        <h1 class="poke_title">
+            Pokemon Labaratory
+        </h1>
+        <a href="#" class="favorites-link favorites-btn">
+            ★ Favorites <span class="favorites-count badge">0</span>
+        </a>
+    </nav>
+    
     <div class="poke-form_box">
         <form class="poke_form">
             <label for="pokname"></label>
@@ -11,4 +17,13 @@
     </div>
 
     <div class="card-container"></div>
+    
+    <!-- Favorites Section (hidden by default) -->
+    <div class="favorites-section favorites-container" style="display: none;">
+        <button class="back-to-search-btn">← Back to Search</button>
+        <h2 class="favorites-title">Your Favorite Pokemon</h2>
+        <div class="empty-state">
+            <p>No favorites yet. Add some Pokemon to your favorites!</p>
+        </div>
+    </div>
 </section>
