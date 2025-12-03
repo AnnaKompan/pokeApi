@@ -1,6 +1,46 @@
 // Favorites Module - GREEN Phase Implementation
 // Key: 'pokemonFavorites' in localStorage
 
+import {
+  filterByName,
+  sortByNameAZ,
+  sortByNameZA,
+  sortByIdAsc,
+  sortByIdDesc,
+  filterByType,
+  filterByWeight,
+  filterByHeight,
+} from './filter_sort/filter_sort.js';
+
+function favoritesFilterAndSort(favorites) {
+  const query = document
+    .querySelector('.poke-input')
+    .value.trim()
+    .toLowerCase();
+  const sortMode = document.querySelector('.poke_sort').value;
+  const type = document.querySelector('.poke_filter').value;
+  const maxWeight = Number(document.getElementById('weight-value').textContent);
+  const maxHeight = Number(document.getElementById('height-value').textContent);
+
+  let result = [...favorites];
+
+  // Filtering logic (same as main)
+  if (query) result = filterByName(result, query);
+
+  if (type && type !== 'all') result = filterByType(result, type);
+
+  result = filterByWeight(result, 1, maxWeight);
+  result = filterByHeight(result, 1, maxHeight);
+
+  // Sorting logic (same as main)
+  if (sortMode === 'asc') result = sortByNameAZ(result);
+  if (sortMode === 'desc') result = sortByNameZA(result);
+  if (sortMode === 'id-asc') result = sortByIdAsc(result);
+  if (sortMode === 'id-desc') result = sortByIdDesc(result);
+
+  return result;
+}
+
 const STORAGE_KEY = 'pokemonFavorites';
 
 /**
@@ -38,7 +78,7 @@ export function addToFavorites(pokemon) {
   if (isFavorited(pokemon.id)) {
     return; // Prevent duplicates
   }
-  
+
   const favorites = getFavorites();
   const pokemonData = {
     id: pokemon.id,
@@ -46,9 +86,10 @@ export function addToFavorites(pokemon) {
     sprites: pokemon.sprites,
     weight: pokemon.weight,
     height: pokemon.height,
-    abilities: pokemon.abilities
+    abilities: pokemon.abilities,
+    types: pokemon.types,
   };
-  
+
   favorites.push(pokemonData);
   saveFavorites(favorites);
   updateFavoriteCount();
@@ -84,15 +125,17 @@ export function updateFavoriteCount() {
 export function updateFavoritesUI() {
   const container = document.querySelector('.favorites-container');
   if (!container) return;
-  
-  const favorites = getFavorites();
-  
+
+  let favorites = getFavorites();
+
+  // 🔥 APPLY SORTING + FILTERING
+  favorites = favoritesFilterAndSort(favorites);
   // Always include back button and title
   const headerHTML = `
     <button class="back-to-search-btn">← Back to Search</button>
     <h2 class="favorites-title">Your Favorite Pokemon</h2>
   `;
-  
+
   if (favorites.length === 0) {
     container.innerHTML = `
       ${headerHTML}
@@ -103,34 +146,48 @@ export function updateFavoritesUI() {
     setupBackButton();
     return;
   }
-  
-  const cardsHTML = favorites.map(pokemon => `
-    <div class="card favorite-card" data-pokemon-id="${pokemon.id}">
-      <div class="card-img-top">
-        <img class="card-img-top-card" src="${pokemon.sprites?.front_default || ''}" alt="${pokemon.name}" />
+
+  const cardsHTML = favorites
+    .map(
+      pokemon => `
+      <div class="card favorite-card" data-pokemon-id="${pokemon.id}">
+        <div class="card-img-top">
+          <img class="card-img-top-card" src="${
+            pokemon.sprites?.front_default || ''
+          }" alt="${pokemon.name}" />
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">Name: ${pokemon.name}</h2>
+          <p class="card-text">Weight: ${pokemon.weight || 'N/A'}</p>
+          <p class="card-text">Height: ${pokemon.height || 'N/A'}</p>
+          <p class="card-text">Height: ${pokemon.height || 'N/A'}</p>
+          <h2 class="poke-type-label">Type:</h2>
+          <p class="card-text">${(pokemon.types || [])
+            .map(t => `<span class='pokemon-type'>${t.type.name}</span>`)
+            .join(' ')}</p>
+          <button class="remove-from-favorites-btn" data-pokemon-id="${
+            pokemon.id
+          }">
+            Remove from Favorites
+          </button>
+        </div>
       </div>
-      <div class="card-body">
-        <h2 class="card-title">Name: ${pokemon.name}</h2>
-        <p class="card-text">Weight: ${pokemon.weight || 'N/A'}</p>
-        <p class="card-text">Height: ${pokemon.height || 'N/A'}</p>
-        <button class="remove-from-favorites-btn" data-pokemon-id="${pokemon.id}">Remove from Favorites</button>
-      </div>
-    </div>
-  `).join('');
-  
+    `
+    )
+    .join('');
+
   container.innerHTML = `
     ${headerHTML}
-    <div class="favorites-cards">${cardsHTML}</div>
+    <div class="favorites-container">${cardsHTML}</div>
   `;
-  
   // Add event listeners to remove buttons
   container.querySelectorAll('.remove-from-favorites-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       const pokemonId = parseInt(e.target.dataset.pokemonId);
       removeFromFavorites(pokemonId);
     });
   });
-  
+
   setupBackButton();
 }
 
@@ -140,7 +197,7 @@ export function updateFavoritesUI() {
 function setupBackButton() {
   const backBtn = document.querySelector('.back-to-search-btn');
   if (backBtn) {
-    backBtn.addEventListener('click', (e) => {
+    backBtn.addEventListener('click', e => {
       e.preventDefault();
       hideFavoritesSection();
     });
@@ -154,7 +211,7 @@ export function showFavoritesSection() {
   const favoritesSection = document.querySelector('.favorites-section');
   const mainContent = document.querySelector('.card-container');
   const formBox = document.querySelector('.poke-form_box');
-  
+
   if (favoritesSection) {
     favoritesSection.style.display = 'block';
     favoritesSection.classList.add('favorites-container');
@@ -165,7 +222,7 @@ export function showFavoritesSection() {
   if (formBox) {
     formBox.style.display = 'none';
   }
-  
+
   updateFavoritesUI();
 }
 
@@ -176,7 +233,7 @@ export function hideFavoritesSection() {
   const favoritesSection = document.querySelector('.favorites-section');
   const mainContent = document.querySelector('.card-container');
   const formBox = document.querySelector('.poke-form_box');
-  
+
   if (favoritesSection) {
     favoritesSection.style.display = 'none';
   }
@@ -193,20 +250,22 @@ export function hideFavoritesSection() {
  */
 export function initFavorites() {
   updateFavoriteCount();
-  
+
   // Set up favorites navigation click handler
-  const favoritesLink = document.querySelector('.favorites-link, .favorites-btn');
+  const favoritesLink = document.querySelector(
+    '.favorites-link, .favorites-btn'
+  );
   if (favoritesLink) {
-    favoritesLink.addEventListener('click', (e) => {
+    favoritesLink.addEventListener('click', e => {
       e.preventDefault();
       showFavoritesSection();
     });
   }
-  
+
   // Set up back button handler
   const backBtn = document.querySelector('.back-to-search-btn');
   if (backBtn) {
-    backBtn.addEventListener('click', (e) => {
+    backBtn.addEventListener('click', e => {
       e.preventDefault();
       hideFavoritesSection();
     });

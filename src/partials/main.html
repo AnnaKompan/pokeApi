@@ -1,7 +1,7 @@
 <section class="poke-container">
     <nav class="poke-nav">
         <h1 class="poke_title">
-            Pokemon Labaratory
+            <a href="./">Pokemon Labaratory</a>
         </h1>
         <a href="#" class="favorites-link favorites-btn">
             ★ Favorites <span class="favorites-count badge">0</span>
@@ -16,14 +16,14 @@
         <p class="poke-form_text">Type an arbitrary number or Pokemon name</p>
     </div>
     <div class="poke-filt_sort">
-        <select name="" id="" class="poke_sort">
+        <select class="poke_sort">
             <option value="">Sort</option>
             <option value="asc">Sort by Name: A-Z</option>
             <option value="desc">Sort by Name: Z-A</option>
             <option value="id-asc">Sort by Number: Ascending</option>
             <option value="id-desc">Sort by Number: Descending</option>
         </select>
-        <select name="" id="" class="poke_filter">
+        <select class="poke_filter">
             <option value="all">Type: </option>
             <option value="normal">Normal</option>
             <option value="ice">Ice</option>
@@ -58,13 +58,21 @@
             <input type="range" min="1" max="900" value="900" class="poke_heights_range" id="poke-height-range">
         </div>
     </div>
+
+    <!-- Main Grid -->
     <div class="card-container"></div>
+
     <!-- Favorites Section (hidden by default) -->
-    <div class="favorites-section favorites-container" style="display: none;">
+    <div class="favorites-section" style="display: none;">
         <button class="back-to-search-btn">← Back to Search</button>
         <h2 class="favorites-title">Your Favorite Pokemon</h2>
+
+        <!-- Favorite card grid container -->
+        <div class="favorites-container"></div>
+
         <div class="empty-state">
             <p>No favorites yet. Add some Pokemon to your favorites!</p>
         </div>
     </div>
+    <button class="more_btn">Load More</button>
 </section>
