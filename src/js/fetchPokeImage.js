@@ -1,5 +1,5 @@
 import pokemonCardTpl from '../partials/markup';
-import API from '../js/api-service';
+import API from './api-service';
 
 const refs = {
   cardContainer: document.querySelector('.card-container'),
@@ -12,14 +12,17 @@ function onSearch(e) {
   e.preventDefault();
 
   const form = e.currentTarget;
-  console.log(form.elements);
   const searchQuery = form.elements.query.value.trim();
-  console.log(searchQuery);
 
   API.fetchPokemon(searchQuery)
-    .then(pokemonCardTpl)
+    .then(renderPokemonCard)
     .catch(onFetchErr)
     .finally(() => form.reset());
+}
+
+function renderPokemonCard(pokemon) {
+  const markup = pokemonCardTpl(pokemon);
+  refs.cardContainer.innerHTML = markup;
 }
 
 function onFetchErr() {

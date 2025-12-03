@@ -5,4 +5,15 @@ function fetchPokemon(pokemonId) {
   return fetch(url).then(response => response.json());
 }
 
-export default { fetchPokemon };
+async function fetchPokemonImageUrl(pokemonName) {
+  const pokemonData = await fetchPokemon(pokemonName.toLowerCase());
+  const imageUrl = pokemonData.sprites?.other?.['official-artwork']?.front_default;
+
+  if (!imageUrl) {
+    throw new Error('Image not found for this Pokemon');
+  }
+
+  return imageUrl;
+}
+
+export default { fetchPokemon, fetchPokemonImageUrl };

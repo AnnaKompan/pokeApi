@@ -1,7 +1,4 @@
 <div class='card'>
-  <div class='card-img-top'>
-    <img src='{{sprites.front_default}}' alt='{{name}}' />
-  </div>
   <div class='card-body'>
     <h2 class='card-title'>Імʼя: {{name}}</h2>
     <p class='card-text'>Вага: {{weight}}</p>
@@ -13,5 +10,8 @@
         <li class='list-group-item'>{{ability.name}}</li>
       </ul>
     {{/each}}
+  </div>
+  <div class='card-img-top'>
+    <img class="pokemon-image" src='{{sprites.front_default}}' alt='{{name}}' />
   </div>
 </div>
