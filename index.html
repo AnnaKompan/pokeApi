@@ -1,9 +1,15 @@
-<!DOCTYPE html><html lang=ru><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>PokeAPI</title><link rel=stylesheet href=/pokeApi/pokeApi.2f15fe0a.css><link rel=icon href=/pokeApi/pokeball-pokemon-svgrepo-com.533674eb.svg type=image/svg+xml><script type=module src=/pokeApi/pokeApi.79cabaad.js></script><body>
+<!DOCTYPE html><html lang=ru><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>PokeAPI</title><link rel=stylesheet href=/pokeApi/pokeApi.dfb02318.css><link rel=stylesheet href=/pokeApi/pokeApi.a6282644.css><link rel=icon href=/pokeApi/pokeball-pokemon-svgrepo-com.533674eb.svg type=image/svg+xml><script type=module src=/pokeApi/pokeApi.3a04a847.js></script><body>
   
   <section class=poke-container>
-    <h1 class=poke_title>
-        Pokemon Labaratory
-    </h1>
+    <nav class=poke-nav>
+        <h1 class=poke_title>
+            <a href=./>Pokemon Labaratory</a>
+        </h1>
+        <a href=# class="favorites-btn favorites-link">
+            ★ Favorites <span class="badge favorites-count">0</span>
+        </a>
+    </nav>
+
     <div class=poke-form_box>
         <form class=poke_form>
             <label for=pokname></label>
@@ -12,14 +18,14 @@
         <p class=poke-form_text>Type an arbitrary number or Pokemon name</p>
     </div>
     <div class=poke-filt_sort>
-        <select name id class=poke_sort>
+        <select class=poke_sort>
             <option value>Sort</option>
             <option value=asc>Sort by Name: A-Z</option>
             <option value=desc>Sort by Name: Z-A</option>
             <option value=id-asc>Sort by Number: Ascending</option>
             <option value=id-desc>Sort by Number: Descending</option>
         </select>
-        <select name id class=poke_filter>
+        <select class=poke_filter>
             <option value=all>Type: </option>
             <option value=normal>Normal</option>
             <option value=ice>Ice</option>
@@ -54,7 +60,22 @@
             <input type=range min=1 max=900 value=900 class=poke_heights_range id=poke-height-range>
         </div>
     </div>
+
+    
     <div class=card-container></div>
+
+    
+    <div class=favorites-section style=display:none>
+        <button class=back-to-search-btn>← Back to Search</button>
+        <h2 class=favorites-title>Your Favorite Pokemon</h2>
+
+        
+        <div class=favorites-container></div>
+
+        <div class=empty-state>
+            <p>No favorites yet. Add some Pokemon to your favorites!</p>
+        </div>
+    </div>
     <button class=more_btn>Load More</button>
 </section>
   
