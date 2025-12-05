@@ -25,14 +25,10 @@ const puppeteer = require('puppeteer');
   // Hints:
   await page.waitForSelector('.poke-input', { visible: true });
 
-  //   await page.click('.poke_sort');
+  await page.click('.poke_sort');
 
-  const searchInput = await page.$('.poke-input');
-  await searchInput.type('charizard', { delay: 80 });
-
-  //   // Type into search box
-  //   const searchInput = await page.$(".DocSearch-Input");
-  //   await searchInput.type("chipi chipi chapa chapa", { delay: 50 });
+  //   const searchInput = await page.$('.poke-input');
+  //   await searchInput.type('charizard', { delay: 80 });
 
   //   // Wait for search result
   //   await page.waitForSelector(".DocSearch-Dropdown", { visible: true });
