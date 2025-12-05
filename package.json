@@ -15,7 +15,8 @@
     "url": "git+https://github.com/AnnaKompan/pokeApi.git"
   },
   "dependencies": {
-    "modern-normalize": "^1.1.0"
+    "modern-normalize": "^1.1.0",
+    "puppeteer": "^24.32.0"
   },
   "devDependencies": {
     "@parcel/config-default": "^2.16.0",
