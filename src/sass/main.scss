@@ -59,6 +59,49 @@ a:visited {
   font-size: 12px;
 }
 
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.team-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.25s;
+}
+
+.team-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.favorites-btn,
+.team-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.25s;
+}
+
+.favorites-btn:hover,
+.team-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
 // SEARCH
 
 .poke-form_box {
@@ -249,8 +292,7 @@ a:visited {
 }
 
 .favorites-title {
-  margin-bottom: 15px;
-  margin-top: 10px;
+  margin: 10px 0 10px;
   font-size: 22px;
   font-weight: bold;
   color: #4b4747;
@@ -263,8 +305,9 @@ a:visited {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 15px;
+  margin: 0 0 15px;
   transition: 0.25s;
+  align-self: center;
 }
 
 .back-to-search-btn:hover {
@@ -277,3 +320,5 @@ a:visited {
   color: #888;
   font-style: italic;
 }
+
+@import 'openai';

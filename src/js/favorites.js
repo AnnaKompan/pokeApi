@@ -211,6 +211,8 @@ export function showFavoritesSection() {
   const favoritesSection = document.querySelector('.favorites-section');
   const mainContent = document.querySelector('.card-container');
   const formBox = document.querySelector('.poke-form_box');
+  const openaiSection = document.querySelector('.openai-section');
+  const teamSection = document.querySelector('.team-section');
 
   if (favoritesSection) {
     favoritesSection.style.display = 'block';
@@ -221,6 +223,12 @@ export function showFavoritesSection() {
   }
   if (formBox) {
     formBox.style.display = 'none';
+  }
+  if (openaiSection) {
+    openaiSection.style.display = 'none';
+  }
+  if (teamSection) {
+    teamSection.style.display = 'none';
   }
 
   updateFavoritesUI();

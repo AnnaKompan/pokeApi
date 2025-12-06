@@ -2,6 +2,7 @@
 import pokemonCardTpl, { handleFavoriteClick } from '../partials/markup.js';
 import API from '../js/api-service';
 import { initFavorites, hideFavoritesSection } from '../js/favorites.js';
+import { initOpenAI } from '../js/openai.js';
 import {
   filterByName,
   sortByNameAZ,
@@ -33,6 +34,7 @@ let totalCount = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
   initFavorites();
+  initOpenAI();
 
   refs.moreBtn.addEventListener('click', morePokemons);
   refs.searchInput.addEventListener('input', () => {
