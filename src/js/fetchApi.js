@@ -28,7 +28,7 @@ const refs = {
 };
 
 let allPokemons = [];
-let limit = 20;
+let limit = 30;
 let offset = 0;
 let totalCount = 0;
 
