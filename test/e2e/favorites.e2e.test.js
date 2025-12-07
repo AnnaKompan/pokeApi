@@ -1,14 +1,16 @@
-import { test, describe, before, after } from 'node:test';
-import assert from 'node:assert';
-import puppeteer from 'puppeteer';
+// Jest + Puppeteer E2E Tests for Favorites Feature
+const puppeteer = require('puppeteer');
+
+// Increase timeout for E2E tests (default is 5s, puppeteer needs more)
+jest.setTimeout(30000);
 
 describe('Favorites Feature - E2E Tests', () => {
   let browser;
   let page;
   const APP_URL = 'http://localhost:1234';
-  const TEST_POKEMON_ID = '25'; // Pikachu for testing
+  const TEST_POKEMON_ID = '1'; // Bulbasaur for testing (in first batch of 20)
 
-  before(async () => {
+  beforeAll(async () => {
     browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -16,7 +18,7 @@ describe('Favorites Feature - E2E Tests', () => {
     page = await browser.newPage();
   });
 
-  after(async () => {
+  afterAll(async () => {
     await browser.close();
   });
 
@@ -35,7 +37,7 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Check if "Add to Favorites" button exists
       const addToFavButton = await page.$('.add-to-favorites-btn');
-      assert.ok(addToFavButton, 'Add to Favorites button should be visible on Pokemon card');
+      expect(addToFavButton).toBeTruthy();
     });
 
     test('should add Pokemon to favorites when button is clicked', async () => {
@@ -60,8 +62,8 @@ describe('Favorites Feature - E2E Tests', () => {
         return data ? JSON.parse(data) : [];
       });
       
-      assert.ok(favorites.length > 0, 'Favorites should contain at least one Pokemon');
-      assert.strictEqual(favorites[0].id, parseInt(TEST_POKEMON_ID), 'Favorite Pokemon ID should match');
+      expect(favorites.length).toBeGreaterThan(0);
+      expect(favorites[0].id).toBe(parseInt(TEST_POKEMON_ID));
     });
 
     test('should show visual feedback when Pokemon is added to favorites', async () => {
@@ -79,10 +81,9 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Check button text changes or class is added
       const buttonText = await page.$eval('.add-to-favorites-btn', btn => btn.textContent);
-      assert.ok(
-        buttonText.includes('Added') || buttonText.includes('Favorited') || buttonText.includes('★'),
-        'Button should show visual feedback after adding to favorites'
-      );
+      expect(
+        buttonText.includes('Added') || buttonText.includes('Favorited') || buttonText.includes('★')
+      ).toBe(true);
     });
 
     test('should prevent adding duplicate Pokemon to favorites', async () => {
@@ -115,7 +116,7 @@ describe('Favorites Feature - E2E Tests', () => {
         return updatedFavorites.filter(p => p.id === parseInt(pokemonId)).length;
       }, TEST_POKEMON_ID);
       
-      assert.strictEqual(duplicateCount, 1, 'Should not add duplicate Pokemon to favorites');
+      expect(duplicateCount).toBe(1);
     });
   });
 
@@ -125,7 +126,7 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Look for favorites navigation element
       const favoritesLink = await page.$('.favorites-link, .favorites-btn, [href*="favorites"]');
-      assert.ok(favoritesLink, 'Favorites navigation element should exist');
+      expect(favoritesLink).toBeTruthy();
     });
 
     test('should display favorites page/section when clicked', async () => {
@@ -139,7 +140,7 @@ describe('Favorites Feature - E2E Tests', () => {
       await page.waitForSelector('.favorites-container, .favorites-section', { timeout: 3000 });
       
       const favoritesSection = await page.$('.favorites-container, .favorites-section');
-      assert.ok(favoritesSection, 'Favorites section should be displayed');
+      expect(favoritesSection).toBeTruthy();
     });
 
     test('should show empty state when no favorites exist', async () => {
@@ -158,10 +159,9 @@ describe('Favorites Feature - E2E Tests', () => {
         el => el.textContent
       );
       
-      assert.ok(
-        emptyMessage.includes('No favorites') || emptyMessage.includes('empty') || emptyMessage.includes('Add some'),
-        'Should display empty state message when no favorites exist'
-      );
+      expect(
+        emptyMessage.includes('No favorites') || emptyMessage.includes('empty') || emptyMessage.includes('Add some')
+      ).toBe(true);
     });
 
     test('should display all favorite Pokemon in favorites list', async () => {
@@ -187,7 +187,7 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Count favorite cards displayed
       const favoriteCards = await page.$$('.favorite-card, .favorites-container .card');
-      assert.strictEqual(favoriteCards.length, 3, 'Should display all 3 favorite Pokemon');
+      expect(favoriteCards.length).toBe(3);
     });
 
     test('should display Pokemon details in favorites list', async () => {
@@ -212,12 +212,12 @@ describe('Favorites Feature - E2E Tests', () => {
       const favoritesLink = await page.$('.favorites-link, .favorites-btn');
       await favoritesLink.click();
       
-      await page.waitForSelector('.favorite-card, .card');
+      await page.waitForSelector('.favorites-section .favorite-card, .favorites-container .card');
       
-      // Check if Pokemon details are displayed
-      const cardContent = await page.$eval('.favorite-card, .card', el => el.textContent);
+      // Check if Pokemon details are displayed - specifically in the favorites section
+      const cardContent = await page.$eval('.favorites-section .favorite-card, .favorites-section .card', el => el.textContent);
       
-      assert.ok(cardContent.includes('pikachu'), 'Should display Pokemon name');
+      expect(cardContent.toLowerCase().includes('pikachu')).toBe(true);
     });
 
     test('should have a "Back to Search" button in favorites section', async () => {
@@ -231,7 +231,7 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Check for back button
       const backButton = await page.$('.back-to-search-btn, .back-btn, [class*="back"]');
-      assert.ok(backButton, 'Back to Search button should exist in favorites section');
+      expect(backButton).toBeTruthy();
     });
 
     test('should return to search page when "Back to Search" button is clicked', async () => {
@@ -256,7 +256,7 @@ describe('Favorites Feature - E2E Tests', () => {
         return style.display !== 'none';
       }, searchForm);
       
-      assert.ok(formDisplay, 'Search form should be visible after clicking back button');
+      expect(formDisplay).toBe(true);
       
       // Verify favorites section is hidden
       const favoritesSection = await page.$('.favorites-section');
@@ -265,7 +265,7 @@ describe('Favorites Feature - E2E Tests', () => {
         return style.display === 'none';
       }, favoritesSection);
       
-      assert.ok(favoritesDisplay, 'Favorites section should be hidden after clicking back button');
+      expect(favoritesDisplay).toBe(true);
     });
   });
 
@@ -288,7 +288,7 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Check for remove button
       const removeButton = await page.$('.remove-from-favorites-btn, .remove-favorite-btn');
-      assert.ok(removeButton, 'Remove button should exist on favorite Pokemon card');
+      expect(removeButton).toBeTruthy();
     });
 
     test('should remove Pokemon from favorites when remove button is clicked', async () => {
@@ -322,7 +322,7 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Verify count decreased
       favoriteCards = await page.$$('.favorite-card, .favorites-container .card');
-      assert.strictEqual(favoriteCards.length, initialCount - 1, 'One Pokemon should be removed from favorites');
+      expect(favoriteCards.length).toBe(initialCount - 1);
     });
 
     test('should update localStorage when Pokemon is removed', async () => {
@@ -354,7 +354,7 @@ describe('Favorites Feature - E2E Tests', () => {
         return data ? JSON.parse(data) : [];
       });
       
-      assert.strictEqual(favorites.length, 1, 'localStorage should be updated with one Pokemon removed');
+      expect(favorites.length).toBe(1);
     });
   });
 
@@ -381,8 +381,8 @@ describe('Favorites Feature - E2E Tests', () => {
         return data ? JSON.parse(data) : [];
       });
       
-      assert.strictEqual(favorites.length, 1, 'Favorites should persist after page reload');
-      assert.strictEqual(favorites[0].id, parseInt(TEST_POKEMON_ID), 'Favorite Pokemon data should be intact');
+      expect(favorites.length).toBe(1);
+      expect(favorites[0].id).toBe(parseInt(TEST_POKEMON_ID));
     });
 
     test('should maintain favorites after browser navigation', async () => {
@@ -408,7 +408,7 @@ describe('Favorites Feature - E2E Tests', () => {
       await page.waitForSelector('.favorites-container, .favorites-section');
       const favoriteCards = await page.$$('.favorite-card, .favorites-container .card');
       
-      assert.strictEqual(favoriteCards.length, 2, 'Favorites should persist after navigation');
+      expect(favoriteCards.length).toBe(2);
     });
 
     test('should store complete Pokemon data in localStorage', async () => {
@@ -430,10 +430,10 @@ describe('Favorites Feature - E2E Tests', () => {
         return data ? JSON.parse(data)[0] : null;
       });
       
-      assert.ok(favoriteData, 'Favorite Pokemon data should exist');
-      assert.ok(favoriteData.id, 'Should store Pokemon ID');
-      assert.ok(favoriteData.name, 'Should store Pokemon name');
-      assert.ok(favoriteData.sprites, 'Should store Pokemon sprites');
+      expect(favoriteData).toBeTruthy();
+      expect(favoriteData.id).toBeTruthy();
+      expect(favoriteData.name).toBeTruthy();
+      expect(favoriteData.sprites).toBeTruthy();
     });
   });
 
@@ -454,10 +454,10 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Look for count badge
       const badge = await page.$('.favorites-count, .badge, .favorites-link .count');
-      assert.ok(badge, 'Should display favorites count badge');
+      expect(badge).toBeTruthy();
       
       const badgeText = await page.$eval('.favorites-count, .badge, .favorites-link .count', el => el.textContent);
-      assert.ok(badgeText.includes('3'), 'Badge should show correct count');
+      expect(badgeText.includes('3')).toBe(true);
     });
 
     test('should toggle between "Add to Favorites" and "Remove from Favorites" based on state', async () => {
@@ -472,7 +472,7 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Check initial button text
       let buttonText = await page.$eval('.add-to-favorites-btn', btn => btn.textContent);
-      assert.ok(buttonText.includes('Add'), 'Should show "Add" when Pokemon is not favorited');
+      expect(buttonText.includes('Add')).toBe(true);
       
       // Click to add
       const addButton = await page.$('.add-to-favorites-btn');
@@ -481,10 +481,9 @@ describe('Favorites Feature - E2E Tests', () => {
       
       // Check updated button text
       buttonText = await page.$eval('.add-to-favorites-btn', btn => btn.textContent);
-      assert.ok(
-        buttonText.includes('Remove') || buttonText.includes('Favorited') || buttonText.includes('★'),
-        'Should show different state when Pokemon is favorited'
-      );
+      expect(
+        buttonText.includes('Remove') || buttonText.includes('Favorited') || buttonText.includes('★')
+      ).toBe(true);
     });
   });
 });

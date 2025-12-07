@@ -281,9 +281,26 @@ export function initFavorites() {
 }
 
 // Make functions available globally for button onclick handlers
-window.addToFavorites = addToFavorites;
-window.removeFromFavorites = removeFromFavorites;
-window.getFavorites = getFavorites;
-window.isFavorited = isFavorited;
-window.updateFavoritesUI = updateFavoritesUI;
-window.updateFavoriteCount = updateFavoriteCount;
+if (typeof window !== 'undefined') {
+  window.addToFavorites = addToFavorites;
+  window.removeFromFavorites = removeFromFavorites;
+  window.getFavorites = getFavorites;
+  window.isFavorited = isFavorited;
+  window.updateFavoritesUI = updateFavoritesUI;
+  window.updateFavoriteCount = updateFavoriteCount;
+}
+
+// CommonJS exports for Jest testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    getFavorites,
+    isFavorited,
+    addToFavorites,
+    removeFromFavorites,
+    updateFavoriteCount,
+    updateFavoritesUI,
+    showFavoritesSection,
+    hideFavoritesSection,
+    initFavorites,
+  };
+}
