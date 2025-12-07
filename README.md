@@ -175,9 +175,9 @@ The project was developed using the Test-Driven Development (TDD):
 2. **GREEN** - implement minimal code to make tests pass
 3. **REFACTOR** - clean up and optimize
 
-**ANNA**
+**ANNA - Search/filter/sort**
 
-1. **Test Describe 1 (RED)**:
+1. **Test Describe 1**:
 
 Test verify incremental search (update results based on user inpu):
 
@@ -186,7 +186,7 @@ Test verify incremental search (update results based on user inpu):
 - empty input returns all Pokemons
 - unknown query returns an empty list
 
-2. **Test Describe 2 (RED)**:
+2. **Test Describe 2**:
 
 Test sorting functionality of Pokemons by weight and height would work
 correctly.
@@ -198,7 +198,7 @@ Test cases should check sort:
 - A-Z alphabetic order
 - Z-A alphabetic order
 
-3. **Test Describe 3 (RED)**:
+3. **Test Describe 3**:
 
 Test filtering functionality of Pokemons:
 
@@ -214,7 +214,7 @@ Tests cover:
 - weight slider filter
 - height slider filter
 
-4.  **Test Describe 4 (RED)**:
+4.  **Test Describe 4**:
 
 Since our APP is deployed at
 [PokemonLabaratory](https://annakompan.github.io/pokeApi/), we can test it using
@@ -228,4 +228,65 @@ Since our APP is deployed at
 
 **JJ**
 
+1. **Feature: Add Pokemon to Favorites**
+
+Test verify the user flow of adding Pokemon to favorites:
+
+- after searching for a Pokemon, "Add to Favorites" btn should appear
+- click btn should store Pokemon in localStorage
+- UI should visualize (change color/text when added)
+- Duplicates must not be added
+
+2. **Feature: Favorites Page/View**
+
+Tests ensure users can navigate to their saved favorites:
+
+- favorites section link must exist in navigation
+- clicking should open Favorites section
+- empty state should be displayed if no Pokemons added
+- all saved favorites must be rendered
+- Pokemons details must be showed as on main page
+- "Back to Search" btn must return to main page
+
+3. **Feature: Removing Pokemon from Favorites**
+
+Tests ensure user can remove favorites:
+
+- each card must have "Remove" btn
+- clicking remove must update localStorage
+- UI must update (remove card from page)
+- Remove reduces favorites count by 1
+
+4. **Feature: localStorage Persistence**
+
+Tests verify persistence across:
+
+- page reloads
+- browser navigation
+- storing complete Pokemon data (ID,name,stats)
+
 **DIMA**
+
+1. **Feature: Validate User Input && API Keys**
+
+Tests ensure the backend validates requests:
+
+- prompt must be provided
+- OPENAI_API_KEY must exist
+- server must reject invalid requests
+
+2. **Feature: Validate Response Format**
+
+Tests verifying OpenAI output follows required format:
+
+- Accept valid format (coma separated)
+- Reject with no commas, null, empty, mixes punctuation, missing Pokemon
+
+3. **Feature: Frontend Integration - Assemble PokeTeam Page**
+
+Test should check implementation of:
+
+- loading indicator ("Thinking...") while waiting for response
+- parsing of OpenAI output into structured list
+- fetching Pokemon images using PokeAPI
+- back btn returns to search main page
