@@ -1,14 +1,14 @@
 # Pokemon Labaratory
 
-## About
+Web application for exploring Pokemon, filtering, sorting them, managing
+favorites and generating AI-powered Pokemon teams for any task.
+
+This project demonstrates modular frontend development and TDD workflow.
 
 Data fetched from from the [PokeAPI](https://pokeapi.co/) open-source RESTful
 API.
 
-Type any number to search for a Pokémon under specific ID and view detailed
-stats like name, height, weight, and skills.
-
-![Example](./src/images/example_web.png)
+![Example_main](./src/images/main_page.png)
 
 - Data dynamically fetched from PokeAPI
 - Layout built with HTML, SCSS, JavaScript.
@@ -16,6 +16,57 @@ stats like name, height, weight, and skills.
 
 **Parcel** - builds all files and dependencies automatically, bundling together
 HTML, CSS, JS, images and other assets for development or production.
+
+## Features
+
+- **Search by input**
+
+Type Pokemon name to search for a Pokémon and view detailed stats like name,
+height, weight, and abilities.
+
+![Example_search](./src/images/search.png)
+
+- **Filter by:**
+
+Type (fire, water, grass...), weight and height slider.
+
+![Example_filter](./src/images/Sort_filter.png)
+
+- **Favorites System:**
+
+Add/Remove Pokemons from Favorites, Favorites page persists in localStorage.
+
+![Example_favorites](./src/images/Favorites.png)
+
+- **AI Mode**
+
+Backend calls OpenAI and returns Pokemon suggestions for any scenario "What
+Pokemons are best for...?"
+
+![Example_favorites](./src/images/AI_page.png)
+
+## Tech Stack
+
+**Frontend**
+
+- HTML / SCSS / JavaScript (Modular ES Modules)
+- Parcel Bundler
+- Handlebars (for templates)
+- Vanilla DOM
+
+**Backend**
+
+- Node.js on Vercel
+- Express-like API handler
+- Calls OpenAI API though backend route:
+
+`POST /api/openai`
+
+**Testing**
+
+- JEST (unit tests)
+- Puppeteer (E2E browser automation)
+- TDD workflow (RED -> GREEN -> REFACTOR)
 
 ## Prerequisites (modify later)
 
@@ -116,37 +167,65 @@ jobs:
 4. Set up GitHub Pages -> Settings -> Pages -> Choose Deploy from branch :
    gh-pages /(root)
 
-## Upcoming feature using TDD
+## Testing (TDD Workflow)
 
-- Sorting Pokemon (weight, height, aphabetic order)
-- Favorite Pokemons Page (add Pokemon to favorites and store in localStorage of
-  the browser)
-- OpenAI API Pokemon Search (use AI to suggest Pokemon for specific task)
+The project was developed using the Test-Driven Development (TDD):
 
-### Anna
+1. **RED** - write failing tests describing the expected behavior
+2. **GREEN** - implement minimal code to make tests pass
+3. **REFACTOR** - clean up and optimize
+
+**ANNA**
 
 1. **Test Describe 1 (RED)**:
+
+Test verify incremental search (update results based on user inpu):
+
+- search by the first letter
+- search by sybstring returns exactly 1 Pokemon
+- empty input returns all Pokemons
+- unknown query returns an empty list
+
+2. **Test Describe 2 (RED)**:
 
 Test sorting functionality of Pokemons by weight and height would work
 correctly.
 
 Test cases should check sort:
 
-- in ascending order (by weight, height, A-Z, ID)
-- in descending order (by weight, height, A-Z, ID)
-- handle single element
-- handle duplicate element
+- in ascending order by ID
+- in descending order by ID
+- A-Z alphabetic order
+- Z-A alphabetic order
 
-2. **Test Describe 2 (RED)**:
+3. **Test Describe 3 (RED)**:
 
 Test filtering functionality of Pokemons:
 
 - by type (fire, water)
-- by name (case-insensitive)
-- by ID
+- by weight
+- by height
+
+Tests cover:
+
 - return all Pokemons if no filter applied
+- return 1 or multiple Pokemons that match the type
 - return empty array if no matching filters
+- weight slider filter
+- height slider filter
 
-3.  **Test Describe 3 (RED)**:
+4.  **Test Describe 4 (RED)**:
 
-Use Puppeteer to test pokemons filter by search input
+Since our APP is deployed at
+[PokemonLabaratory](https://annakompan.github.io/pokeApi/), we can test it using
+[Puppeteer](https://pptr.dev/):
+
+- search by input
+- search by A-Z
+- filtering by type
+- filtering by weight slider
+- filtering by height slider
+
+**JJ**
+
+**DIMA**
