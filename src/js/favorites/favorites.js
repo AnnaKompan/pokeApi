@@ -10,7 +10,7 @@ import {
   filterByType,
   filterByWeight,
   filterByHeight,
-} from './filter_sort/filter_sort.js';
+} from '../filter_sort/filter_sort.js';
 
 function favoritesFilterAndSort(favorites) {
   const query = document
