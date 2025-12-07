@@ -119,16 +119,14 @@ Lucario: Lucario's fighting abilities make it very agile and proficient at clean
         }
 
         try {
-          const API_BASE =
-            window.location.hostname === 'localhost'
-              ? 'http://localhost:3000'
-              : 'https://YOUR-RENDER-URL.onrender.com';
-
-          const res = await fetch(`${API_BASE}/api/openai`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt }),
-          });
+          const res = await fetch(
+            'https://poke-api-server.vercel.app/api/openai',
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt }),
+            }
+          );
 
           if (!res.ok) {
             const text = await res.text();
