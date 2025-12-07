@@ -1,7 +1,7 @@
 // import pokemonCardTpl from '../partials/markup';
 import pokemonCardTpl, { handleFavoriteClick } from '../partials/markup.js';
 import API from '../js/api-service';
-import { initFavorites, hideFavoritesSection } from '../js/favorites.js';
+import { initFavorites, hideFavoritesSection } from './favorites/favorites.js';
 import { initOpenAI } from '../js/openai.js';
 import {
   filterByName,

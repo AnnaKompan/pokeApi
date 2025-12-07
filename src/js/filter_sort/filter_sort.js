@@ -1,9 +1,16 @@
 function filterByName(pokemonArr, query) {
   if (!query) return pokemonArr;
   const lowerQuery = query.toLowerCase();
-  return pokemonArr.filter(pokemon =>
-    pokemon.name.toLowerCase().startsWith(lowerQuery)
-  );
+  const isNumeric = /^\d+$/.test(query);
+  
+  return pokemonArr.filter(pokemon => {
+    // Match by ID if query is numeric
+    if (isNumeric && pokemon.id === parseInt(query)) {
+      return true;
+    }
+    // Match by name (starts with query)
+    return pokemon.name.toLowerCase().startsWith(lowerQuery);
+  });
 }
 
 function sortByNameAZ(arr) {
@@ -21,15 +28,27 @@ function sortByIdDesc(arr) {
 
 function filterByType(arr, type) {
   const wanted = Array.isArray(type) ? type : [type];
-  return arr.filter(p => p.types.some(t => wanted.includes(t.type.name)));
+  return arr.filter(p => {
+    // If types is undefined, include the Pokemon (don't filter it out)
+    if (!p.types || !Array.isArray(p.types)) return true;
+    return p.types.some(t => wanted.includes(t.type.name));
+  });
 }
 
 function filterByWeight(arr, min, max) {
-  return arr.filter(p => p.weight >= min && p.weight <= max);
+  return arr.filter(p => {
+    // If weight is undefined, include the Pokemon (don't filter it out)
+    if (p.weight === undefined || p.weight === null) return true;
+    return p.weight >= min && p.weight <= max;
+  });
 }
 
 function filterByHeight(arr, min, max) {
-  return arr.filter(p => p.height >= min && p.height <= max);
+  return arr.filter(p => {
+    // If height is undefined, include the Pokemon (don't filter it out)
+    if (p.height === undefined || p.height === null) return true;
+    return p.height >= min && p.height <= max;
+  });
 }
 
 module.exports = {

@@ -3,7 +3,7 @@ import {
   addToFavorites,
   removeFromFavorites,
   updateFavoriteCount,
-} from '../js/favorites.js';
+} from '../js/favorites/favorites.js';
 
 const refs = {
   cardContainer: document.querySelector('.card-container'),
