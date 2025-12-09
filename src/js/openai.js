@@ -138,19 +138,8 @@ Lucario: Lucario's fighting abilities make it very agile and proficient at clean
           console.log('OpenAI Server Response:', data);
           if (aiResponse) {
             // Parse the new format: each line is "PokemonName: description"
-            const lines = data.result
-              .split('\n')
-              .filter(line => line.trim().length > 0);
-            const pokemonEntries = [];
 
-            lines.forEach(line => {
-              const colonIndex = line.indexOf(':');
-              if (colonIndex > 0) {
-                const pokemonName = line.substring(0, colonIndex).trim();
-                const reason = line.substring(colonIndex + 1).trim();
-                pokemonEntries.push({ name: pokemonName, reason: reason });
-              }
-            });
+            const pokemonEntries = parseAIResult(data.result);
 
             const list = document.createElement('ul');
             list.className = 'pokemon-list';
@@ -216,4 +205,27 @@ export function initOpenAI() {
     });
   }
   handleAIQuery();
+}
+
+/**
+ * Parses the OpenAI response string into structured data.
+ * @param {string} text - The raw text response from OpenAI.
+ * @returns {Array<{name: string, reason: string}>} Array of pokemon objects.
+ */
+export function parseAIResult(text) {
+  if (!text) return [];
+
+  const lines = text.split('\n').filter(line => line.trim().length > 0);
+  const pokemonEntries = [];
+
+  lines.forEach(line => {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex > 0) {
+      const pokemonName = line.substring(0, colonIndex).trim();
+      const reason = line.substring(colonIndex + 1).trim();
+      pokemonEntries.push({ name: pokemonName, reason: reason });
+    }
+  });
+
+  return pokemonEntries;
 }
