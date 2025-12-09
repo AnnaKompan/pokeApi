@@ -94,7 +94,11 @@ Download: https://nodejs.org/
 
 `cd pokeApi`
 
-3. Run the development server (Parcel will start local development server)
+3.Install dependencies
+
+`npm install`
+
+4.Run the development server (Parcel will start local development server)
 
 `npm run start`
 
