@@ -251,6 +251,26 @@ export function hideFavoritesSection() {
   if (formBox) {
     formBox.style.display = 'block';
   }
+
+  // Sync favorite buttons in search results to reflect current favorites state
+  syncFavoriteButtons();
+}
+
+/**
+ * Sync all favorite buttons in search results to reflect current favorites state
+ */
+function syncFavoriteButtons() {
+  const buttons = document.querySelectorAll('.card-container .add-to-favorites-btn');
+  buttons.forEach(btn => {
+    const pokemonId = parseInt(btn.dataset.pokemonId);
+    if (isFavorited(pokemonId)) {
+      btn.textContent = '★ Favorited';
+      btn.classList.add('favorited');
+    } else {
+      btn.textContent = '☆ Add to Favorites';
+      btn.classList.remove('favorited');
+    }
+  });
 }
 
 /**

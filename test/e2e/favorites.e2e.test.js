@@ -460,6 +460,53 @@ describe('Favorites Feature - E2E Tests', () => {
       expect(badgeText.includes('3')).toBe(true);
     });
 
+    test('should update favorited mark in search results after removing from favorites page', async () => {
+      await page.goto(APP_URL);
+      await page.evaluate(() => localStorage.clear());
+      
+      // Step 1: Search for Pokemon and add to favorites
+      await page.waitForSelector('.poke-input');
+      await page.type('.poke-input', TEST_POKEMON_ID);
+      await page.keyboard.press('Enter');
+      await page.waitForSelector('.card', { timeout: 5000 });
+      
+      // Add to favorites
+      const addButton = await page.$('.add-to-favorites-btn');
+      await addButton.click();
+      await new Promise(r => setTimeout(r, 200));
+      
+      // Verify it shows favorited state (yellow star)
+      let buttonText = await page.$eval('.add-to-favorites-btn', btn => btn.textContent);
+      let hasFavoritedClass = await page.$eval('.add-to-favorites-btn', btn => btn.classList.contains('favorited'));
+      expect(buttonText.includes('★') || buttonText.includes('Favorited')).toBe(true);
+      expect(hasFavoritedClass).toBe(true);
+      
+      // Step 2: Go to favorites page
+      const favoritesLink = await page.$('.favorites-link, .favorites-btn');
+      await favoritesLink.click();
+      await page.waitForSelector('.favorites-section', { timeout: 3000 });
+      
+      // Step 3: Remove from favorites
+      const removeButton = await page.$('.remove-from-favorites-btn, .remove-favorite-btn');
+      await removeButton.click();
+      await new Promise(r => setTimeout(r, 300));
+      
+      // Step 4: Click back to search
+      const backButton = await page.$('.back-to-search-btn, .back-btn');
+      await backButton.click();
+      await new Promise(r => setTimeout(r, 300));
+      
+      // Step 5: Verify the Pokemon card in search results NO LONGER shows favorited state
+      // The bug is that it still shows '★ Favorited' and has 'favorited' class
+      buttonText = await page.$eval('.add-to-favorites-btn', btn => btn.textContent);
+      hasFavoritedClass = await page.$eval('.add-to-favorites-btn', btn => btn.classList.contains('favorited'));
+      
+      // After removing from favorites, button should show "Add to Favorites" not "Favorited"
+      expect(buttonText.includes('Add to Favorites')).toBe(true);
+      expect(buttonText.includes('★')).toBe(false);
+      expect(hasFavoritedClass).toBe(false);
+    });
+
     test('should toggle between "Add to Favorites" and "Remove from Favorites" based on state', async () => {
       await page.goto(APP_URL);
       await page.evaluate(() => localStorage.clear());
